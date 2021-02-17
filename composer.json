@@ -1,0 +1,30 @@
+{
+    "name": "laraveldesign/like-button",
+    "description": "Adds a like button to Laravel",
+    "keywords": [
+        "laraveldesign",
+        "like-button"
+    ],
+    "homepage": "https://github.com/laraveldesign/like-button",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Shane Barron",
+            "email": "cshanebarron@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Laraveldesign\\LikeButton\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laraveldesign\\LikeButton\\LikeButtonServiceProvider"
+            ]
+        }
+    }
+}
