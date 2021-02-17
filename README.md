@@ -1,11 +1,10 @@
-# Very short description of the package
+# Laravel Likes Button
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laraveldesign/like-button.svg?style=flat-square)](https://packagist.org/packages/laraveldesign/like-button)
-[![Build Status](https://img.shields.io/travis/laraveldesign/like-button/master.svg?style=flat-square)](https://travis-ci.org/laraveldesign/like-button)
 [![Quality Score](https://img.shields.io/scrutinizer/g/laraveldesign/like-button.svg?style=flat-square)](https://scrutinizer-ci.com/g/laraveldesign/like-button)
 [![Total Downloads](https://img.shields.io/packagist/dt/laraveldesign/like-button.svg?style=flat-square)](https://packagist.org/packages/laraveldesign/like-button)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+Provides a like button system for Laravel projects.
 
 ## Installation
 
@@ -18,14 +17,15 @@ composer require laraveldesign/like-button
 ## Usage
 
 ``` php
-// Usage description here
+<livewire:like-button::like-button 
+    :key="time().$model->id" 
+    :model="$model">
+</livewire:like-button::like-button>
 ```
 
 ### Testing
 
-``` bash
-composer test
-```
+This package does not contain a test suite at this time.
 
 ### Changelog
 
@@ -47,7 +47,3 @@ If you discover any security related issues, please email cshanebarron@gmail.com
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Laravel Package Boilerplate
-
-This package was generated using the [Laravel Package Boilerplate](https://laravelpackageboilerplate.com).
