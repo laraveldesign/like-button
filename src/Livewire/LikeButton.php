@@ -74,7 +74,6 @@ class LikeButton extends Component
                 } else {
                     $test->delete();
                 }
-                $this->calculate();
             } else {
                 Like::create([
                     'user_id' => auth()->user()->id,
@@ -83,7 +82,9 @@ class LikeButton extends Component
                     'type' => $type
                 ]);
                 $this->current_like_type = $type;
+
             }
+            $this->calculate();
         }
 
 
