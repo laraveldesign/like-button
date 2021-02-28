@@ -18,7 +18,6 @@ class CreateLikesTable extends Migration
             $table->bigInteger('user_id');
             $table->bigInteger('model_id');
             $table->string('model_class');
-            $table->string('type');
             $table->timestamps();
         });
     }

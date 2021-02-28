@@ -9,20 +9,10 @@ use Livewire\Component;
 class LikeButton extends Component
 {
 
-    public $show;
     public $model_id;
     public $model_class;
-    public $current_like_type;
-
     public $total_likes;
-    public $total_loves;
-    public $total_cares;
-    public $total_hahas;
-    public $total_wows;
-    public $total_sads;
-    public $total_angrys;
-
-    public $total_all;
+    public $i_like;
 
     public function mount($model)
     {
@@ -33,20 +23,12 @@ class LikeButton extends Component
 
     public function calculate()
     {
-        $current_like = $this->currentLike();
-        if ($current_like) {
-            $this->current_like_type = $current_like->type;
-        } else {
-            $this->current_like_type = '';
-        }
-        $this->total_likes = self::getVoteCount('like',$this->model_id,$this->model_class);
-        $this->total_loves = self::getVoteCount('love',$this->model_id,$this->model_class);
-        $this->total_cares = self::getVoteCount('care',$this->model_id,$this->model_class);
-        $this->total_hahas = self::getVoteCount('haha',$this->model_id,$this->model_class);
-        $this->total_wows = self::getVoteCount('wow',$this->model_id,$this->model_class);
-        $this->total_sads = self::getVoteCount('sad',$this->model_id,$this->model_class);
-        $this->total_angrys = self::getVoteCount('angry',$this->model_id,$this->model_class);
-        $this->total_all = self::getVoteCount('all',$this->model_id,$this->model_class);
+        $params = [
+            ['model_id', '=', $this->model_id],
+            ['model_class', '=', $this->model_class]
+        ];
+        $this->total_likes = Like::where($params)->count();
+        $this->i_like = $this->currentLike();
     }
 
     public function currentLike()
@@ -58,52 +40,25 @@ class LikeButton extends Component
                 'user_id' => auth()->user()->id
             ])->first();
         }
+        return false;
 
     }
 
-    public function like($type)
+    public function like()
     {
-        if(Auth::check()) {
-            // check if like exists
+        if (Auth::check()) {
             $test = $this->currentLike();
             if ($test) {
-                //if not same type, change type
-                if ($test->type !== $type) {
-                    $test->type = $type;
-                    $test->save();
-                } else {
-                    $test->delete();
-                }
+                $test->delete();
             } else {
                 Like::create([
                     'user_id' => auth()->user()->id,
                     'model_id' => $this->model_id,
-                    'model_class' => $this->model_class,
-                    'type' => $type
+                    'model_class' => $this->model_class
                 ]);
-                $this->current_like_type = $type;
-
             }
             $this->calculate();
         }
-
-
-    }
-
-    public static function getVoteCount($type,$model_id,$model_class)
-    {
-        if(is_object($model_id)) {
-            $model_class = get_class($model_id);
-            $model_id = $model_id->id;
-        }
-        $params = [
-            ['model_id','=', $model_id],
-            ['model_class','=',$model_class]
-        ];
-        if ($type != 'all') {
-            $params[] = ['type','=',$type];
-        }
-        return Like::where($params)->count();
     }
 
     public function render()

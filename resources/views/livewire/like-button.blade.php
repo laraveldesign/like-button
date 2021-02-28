@@ -1,58 +1,36 @@
-<div x-data="{ show:false }" class="w-full relative rounded-lg shadow p-2 border-2 border-gray-200 bg-white">
-    <div class="flex justify-between">
-        <div class="flex">
-                <div class="focus:outline-none bg-gray-100 shadow flex items-center p-2 rounded   cursor-pointer"
-                        @click="show=!show">
-                    <div x-show="!show" style="display:none;" class="mr-1">
-                        @if($current_like_type)
-                            <x-like-button::icon type="{{$current_like_type}}"/>
-                        @else
-                            <x-like-button::icon type="like"/>
-                        @endif
-                    </div>
-
-                    <div x-show="!show" style="display:none;">
-                        @if($current_like_type)
-                            <div>
-                                {{ucfirst($current_like_type)}} ({{$total_all}})
-                            </div>
-                        @else
-                            <div>
-                                Like ({{$total_all}})
-                            </div>
-                        @endif
-                    </div>
-                    <div style="display:none;" x-show="show" class="
-         shadow rounded-lg flex -top-14 -left-24 bg-white p-2
-    ">
-                        @php
-                            $buttons = [
-                                'like','love','care','haha','wow','sad','angry'
-                            ];
-                        @endphp
-                        @foreach($buttons as $button)
-                            <button
-                                @click.away="show=false"
-                                title="{{ucfirst($button)}}"
-                                class="
-                                cursor-pointer
-                            flex
-                            focus:outline-none p-1 rounded-lg
-                            @if($current_like_type === $button)
-                                    bg-gray-100
-@else
-                                    bg-white
-@endif
-                                    "
-                                wire:click="like('{{$button}}')">
-                                <x-like-button::icon type="{{$button}}"></x-like-button::icon>
-                                <span>({{\Laraveldesign\LikeButton\Livewire\LikeButton::getVoteCount($button,$model_id,$model_class)}})</span>
-                            </button>
-                        @endforeach
-
-                    </div>
-                </div>
-
+<button
+    wire:click="like"
+    class="
+    focus:outline-none
+    flex
+    items-center
+    bg-white
+    py-1
+    px-4
+    rounded"
+>
+    @if($i_like)
+        <div>
+            <svg class="w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <defs/>
+                <path fill="#22a7ef" d="M4.5 8h2C7.3 8 8 8.7 8 9.5v10c0 .8-.7 1.5-1.5 1.5h-2c-.8 0-1.5-.7-1.5-1.5v-10C3 8.7 3.7 8 4.5 8z"/>
+                <path fill="#22a7ef" d="M16.3 21H10c-1.1 0-2-.9-2-2V9.2c0-.7.3-1.5.8-2l2.5-2.7.4-2.3c.2-1 1.4-1.5 2.2-.8.5.5 1.1 1.3 1.1 2.5C15 5.6 14 8 14 8h5c1.7 0 3 1.3 3 3v1.3c0 .4-.1.9-.3 1.3L19 19.3c-.4 1-1.5 1.7-2.7 1.7z" opacity=".35"/>
+            </svg>
         </div>
+    @else
+        <div>
+            <svg class="w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <defs/>
+                <path d="M4.5 8h2C7.3 8 8 8.7 8 9.5v10c0 .8-.7 1.5-1.5 1.5h-2c-.8 0-1.5-.7-1.5-1.5v-10C3 8.7 3.7 8 4.5 8z"/>
+                <path d="M16.3 21H10c-1.1 0-2-.9-2-2V9.2c0-.7.3-1.5.8-2l2.5-2.7.4-2.3c.2-1 1.4-1.5 2.2-.8.5.5 1.1 1.3 1.1 2.5C15 5.6 14 8 14 8h5c1.7 0 3 1.3 3 3v1.3c0 .4-.1.9-.3 1.3L19 19.3c-.4 1-1.5 1.7-2.7 1.7z" opacity=".35"/>
+            </svg>
+        </div>
+    @endif
+    <div class="ml-1
+    @if($i_like)
+        font-bold
+    @endif
+        ">
+        {{__('Like')}} ({{$total_likes}})
     </div>
-</div>
+</button>
